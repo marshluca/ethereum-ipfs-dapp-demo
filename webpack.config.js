@@ -52,7 +52,11 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true
+    overlay: true,
+    port: 9000,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
   },
   performance: {
     hints: false
@@ -63,11 +67,11 @@ module.exports = {
 if (process.env.NODE_ENV === 'production') {
   function isExternal(mdl, vendorName) {
     var context = mdl.context;
-  
+
     if (typeof context !== 'string') {
       return false;
     }
-  
+
     return context.indexOf('node_modules') !== -1 &&
       (!vendorName || context.indexOf(vendorName) !== -1);
   }
@@ -116,7 +120,7 @@ if (process.env.NODE_ENV === 'production') {
     new UglifyJsPlugin({
       sourceMap: true,
       uglifyOptions: {
-        ecma: 8,  
+        ecma: 8,
         compress: {
           warnings: false
         }
